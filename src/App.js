@@ -1,24 +1,21 @@
-import logo from './logo.svg';
 import './App.css';
 import productData from './productData';
 import ShoesList from './ShoesList';
 import DetailPage from './pages/detail';
-import DetailPage2 from './pages/detail2';
-import DetailPage3 from './pages/detail3';
 
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { useState } from 'react';
 
-import {Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom'
+import {Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom';
 
+import styled from 'styled-components';
 
 function App() {
 
   let [shoes,setShoes] = useState(productData)
   let [shoePic,setShoePic] = useState(['https://codingapple1.github.io/shop/shoes1.jpg','https://codingapple1.github.io/shop/shoes2.jpg','https://codingapple1.github.io/shop/shoes3.jpg'])
-  let [detailLink,setDetailLink] = useState(['/detail','/detail2','/detail3'])
   let navigate = useNavigate();
 
   return (
@@ -44,12 +41,8 @@ function App() {
 
       {/* Routes */}
       <Routes>
-        <Route path='/detail' element={<div><DetailPage navigate={navigate}/></div>} />
-        <Route path='/detail2' element={<div><DetailPage2/></div>} />
-        {/* Neted Route */}
-        <Route path='/detail3' element={<div><DetailPage3 navigate={navigate}/></div>}>
-          <Route path='caution' element={<div><h3>구매 전 주의사항</h3></div>}></Route>
-        </Route>
+        <Route path='/detail/:id' element={<div><DetailPage navigate={navigate} shoes={shoes} shoePic={shoePic}/></div>} />
+
         {/* 홈페이지 */}
         <Route path="/" element={
           <>
@@ -58,7 +51,7 @@ function App() {
             <div className="row">
              {shoes.map(function(a,i){
               return (
-                <ShoesList  num = {i} shoes = {shoes} shoePic = {shoePic} detailLink={detailLink} navigate={navigate}></ShoesList>
+                <ShoesList  num = {i} shoes = {shoes} shoePic = {shoePic} navigate={navigate}></ShoesList>
               )
             })}          
             </div>
