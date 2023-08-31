@@ -40,7 +40,7 @@ function App() {
           <Nav className="me-auto">
             <Nav.Link href="/">Home</Nav.Link>
             <Nav.Link href="#features">Product</Nav.Link>
-            <Nav.Link href="#pricing">Cart</Nav.Link>
+            <Nav.Link href="/cart">Cart</Nav.Link>
           </Nav>
         </Container>
       </Navbar>
@@ -99,8 +99,8 @@ function App() {
         }
         }}>상품 더보기</button>
         
-      {loadingSwc == true ? <NowLoading/> : null}
-      {clickArt == true ? <div>더이상 상품이 없습니다.</div> : null}
+      {loadingSwc === true ? <NowLoading/> : null}
+      {clickArt === true ? <div>더이상 상품이 없습니다.</div> : null}
           </>
         }/>
         {/* 404페이지 */}

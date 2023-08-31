@@ -1,14 +1,20 @@
 import Table from "react-bootstrap/Table";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { changeName , plusAge } from './../store/userSlice.js';
+import { plusCount } from "../store.js";
 
 function Cart(){
 
-    let a = useSelector((state)=>{ return state.stock})
-    console.log(a.stock)
+    let a = useSelector((state)=>{ return state.user})
     let cartData = useSelector((state)=>{return state.cartData})
+    let dispatch = useDispatch()
 
     return(
         <div>
+          {a.age}의 장바구니
+          <button onClick={()=>{
+            dispatch(plusAge())
+          }}>버튼</button>
             <Table striped bordered hover size="sm">
               <thead>
                 <tr>
@@ -19,23 +25,20 @@ function Cart(){
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>1</td>
-                  <td>{cartData[0].name}</td>
-                  <td>{cartData[0].count}</td>
-                  <td>@mdo</td>
-                </tr>
-                <tr>
-                <td>2</td>
-                  <td>{cartData[1].name}</td>
-                  <td>{cartData[1].count}</td>
-                  <td>@fat</td>
-                </tr>
-                <tr>
-                  <td>3</td>
-                  <td colSpan={2}>Larry the Bird</td>
-                  <td>@twitter</td>
-                </tr>
+                {
+                  cartData.map((a,i)=>{
+                    return(
+                    <tr key={i}>
+                      <td>{cartData[i].id}</td>
+                      <td>{cartData[i].name}</td>
+                      <td>{cartData[i].count}</td>
+                      <td><button onClick={()=>{
+                        dispatch(changeName())
+                        dispatch(plusCount(i))
+                      }}>+</button></td>
+                    </tr>)
+                  })
+                }
               </tbody>
             </Table>
         </div>
