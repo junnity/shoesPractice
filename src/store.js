@@ -1,5 +1,5 @@
 import { configureStore, createSlice } from '@reduxjs/toolkit'
-import user from './store/userSlice.js'
+import user from './../src/store/userSlice.js'
 
 
 
@@ -15,7 +15,10 @@ let cartData = createSlice({
     ,
     reducers : {
       plusCount(state,action){
-        state[action.payload].count = state[action.payload].count+1
+        let a = state.find(function(x){
+          return x.id == action.payload
+        })
+        a.count = a.count+1
       }
     }
 })
