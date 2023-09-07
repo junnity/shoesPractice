@@ -1,8 +1,10 @@
 import { useContext, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 // styled-component 쓰면 CSS 파일 없어도 되는데
 import styled from "styled-components";
 import Nav from "react-bootstrap/Nav"
+import { useDispatch, useSelector } from "react-redux";
+import { plusCart } from "../store";
 
 
 
@@ -26,6 +28,20 @@ function DetailPage(props){
     return x.id == id
   })
   let [끝,끝변경]=useState('')
+
+  let cartDate = useSelector((state)=>{return state.cartData})
+  let dispatch = useDispatch()
+  let navigate = useNavigate()
+
+  
+  useEffect(()=>{
+    let 꺼낸거 = localStorage.getItem('watched')
+    꺼낸거 = JSON.parse(꺼낸거)
+    꺼낸거.push(paramId.id)
+    꺼낸거 = new Set(꺼낸거)
+    꺼낸거 = Array.from(꺼낸거)
+    localStorage.setItem('watched',JSON.stringify(꺼낸거))
+  },[])
 
   // 라이프사이클
   useEffect(()=>{
@@ -59,7 +75,10 @@ function DetailPage(props){
         <h4 className="pt-5">{paramId.title}</h4>
         <p>{paramId.content}</p>
         <p>{paramId.price}</p>
-        <button className="btn btn-danger" >주문하기</button>
+        <button className="btn btn-danger" onClick={()=>{
+          dispatch(plusCart({id:paramId.id, name:paramId.title, count:1}))
+          navigate('/cart')
+        }}>주문하기</button>
         <button onClick={()=>{props.navigate(-1)}}>뒤로가기</button>
         <input onChange={(e)=>{ 인풋내용변경(e.target.value)}} />
       </div>

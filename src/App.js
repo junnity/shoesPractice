@@ -24,8 +24,14 @@ function App() {
   let [numClick, setNumClick] = useState(2)
   let [clickArt,setClickArt] = useState(false)
 
-
-
+  
+  useEffect(()=>{
+    var getWatched = localStorage.getItem('watched');
+    if(getWatched == null){
+      localStorage.setItem('watched',JSON.stringify( [] ))
+    }
+  }
+  ,[])
   useEffect(()=>{
 
   },[loadingSwc])

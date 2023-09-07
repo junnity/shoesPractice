@@ -15,14 +15,38 @@ let cartData = createSlice({
     ,
     reducers : {
       plusCount(state,action){
+        // findIndex 도 있음
         let a = state.find(function(x){
           return x.id == action.payload
         })
         a.count = a.count+1
+      },
+      plusCart(state,action={}){
+        let a = state.find(function(x){
+          return x.id == action.payload.id
+        })
+        if(a==null){
+          state.push(action.payload)
+        }
+        else{a.count = a.count+1}
+        
+      },
+      minusCount(state,action){
+        let a = state.find(function(x){
+          return x.id == action.payload
+        })
+        if(a.count==1){
+          return state.filter(function(x){ return x.id !== a.id })
+        }
+        else{
+          a.count = a.count-1
+        }
+        
+        // return을 사용하여 state를 변경할 수 있음
       }
     }
 })
-export let {plusCount} = cartData.actions
+export let {plusCount,plusCart,minusCount} = cartData.actions
 
 export default configureStore({
   reducer: { 
